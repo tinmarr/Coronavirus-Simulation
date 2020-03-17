@@ -50,6 +50,12 @@ function increaseDay(){
             new House((i*100) + 100, 50, 100, 100);
         }
         for (var i=0;i<8;i++){
+            new House((i*100) + 100, 150, 100, 100);
+        }
+        for (var i=0;i<8;i++){
+            new House((i*100) + 100, 450, 100, 100);
+        }
+        for (var i=0;i<8;i++){
             new House((i*100) + 100, 550, 100, 100);
         }
     }

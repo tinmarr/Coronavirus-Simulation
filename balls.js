@@ -58,6 +58,7 @@ class Balls {
                         this.sprite.destroy();
                         numOfPeople--;
                         dead++;
+                        ill--;
                     } else {
                         this.changeState('2');
                         ill--;

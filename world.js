@@ -4,11 +4,10 @@ class World {
         this.ballClasses = [];
         this.ballSprites = [];
         for (var i=0;i<n;i++){
-            var ball = new Balls(Math.random() * scene.game.canvas.width, Math.random() * scene.game.canvas.height, i==0 ? '1' : '0', 0, this);
+            var ball = new Balls(Math.random() * scene.game.canvas.width, Math.random() * scene.game.canvas.height, '0', 0, this);
+            i === 0 ? ball.changeState('1') : {};
             this.add(ball);
         }
-        healthy--;
-        ill++;
     }
     add(ball){
         this.ballClasses.push(ball);
