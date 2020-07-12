@@ -2,6 +2,7 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    parent: 'phaser',
     physics: {
         default: 'arcade',
         arcade: {
@@ -13,16 +14,11 @@ var config = {
         preload: preload,
         create: create,
         update: update,
-    }
+    },
 };
 
 let game = new Phaser.Game(config),
-    isolateDay = 15,
-    numOfPeople = 500,
-    healthy = numOfPeople,
-    ill = 0,
-    recovered = 0,
-    dead = 0,
+    isolateDay = -1,
     day = 0,
     scene : Phaser.Scene,
     world : World;
@@ -36,14 +32,10 @@ function preload(){
 
 function create(){
     scene = this;
-    world = new World(numOfPeople);
     this.time.delayedCall(1000,increaseDay);
-    updateStats();
 }
 
-function update(){ 
-    updateStats();
-}
+function update(){}
 
 function increaseDay(){
     day++;
@@ -64,11 +56,8 @@ function increaseDay(){
     scene.time.delayedCall(1000,increaseDay);
 }
 
-function updateStats(){
-    document.getElementById('date').innerHTML = day.toString();
-    document.getElementById('h').innerHTML = healthy.toString();
-    document.getElementById('i').innerHTML = ill.toString();
-    document.getElementById('r').innerHTML = recovered.toString();
-    document.getElementById('d').innerHTML = dead.toString();
-    document.getElementById('t').innerHTML = numOfPeople.toString();
+function createWorld() : World {
+    world.destroy();
+    let numOfPeople : number = parseFloat((<HTMLInputElement>document.getElementById('numPeople')).value);
+    return new World(numOfPeople);
 }

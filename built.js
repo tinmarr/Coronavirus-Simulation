@@ -46,20 +46,13 @@ class Balls {
             this.healthState = newState;
             this.sprite.setTexture(newState);
             if (this.healthState === '1') {
-                ill++;
-                healthy--;
                 scene.time.delayedCall(21000, () => {
                     if (Math.random() <= 0.03) {
                         world.remove(this);
                         this.sprite.destroy();
-                        numOfPeople--;
-                        dead++;
-                        ill--;
                     }
                     else {
                         this.changeState('2');
-                        ill--;
-                        recovered++;
                     }
                 });
             }
@@ -95,6 +88,7 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    parent: 'phaser',
     physics: {
         default: 'arcade',
         arcade: {
@@ -106,9 +100,9 @@ var config = {
         preload: preload,
         create: create,
         update: update,
-    }
+    },
 };
-let game = new Phaser.Game(config), isolateDay = 15, numOfPeople = 500, healthy = numOfPeople, ill = 0, recovered = 0, dead = 0, day = 0, scene, world;
+let game = new Phaser.Game(config), isolateDay = -1, day = 0, scene, world;
 function preload() {
     this.load.image('0', 'imgs/healthy.png');
     this.load.image('1', 'imgs/ill.png');
@@ -117,13 +111,9 @@ function preload() {
 }
 function create() {
     scene = this;
-    world = new World(numOfPeople);
     this.time.delayedCall(1000, increaseDay);
-    updateStats();
 }
-function update() {
-    updateStats();
-}
+function update() { }
 function increaseDay() {
     day++;
     if (day === isolateDay) {
@@ -142,13 +132,10 @@ function increaseDay() {
     }
     scene.time.delayedCall(1000, increaseDay);
 }
-function updateStats() {
-    document.getElementById('date').innerHTML = day.toString();
-    document.getElementById('h').innerHTML = healthy.toString();
-    document.getElementById('i').innerHTML = ill.toString();
-    document.getElementById('r').innerHTML = recovered.toString();
-    document.getElementById('d').innerHTML = dead.toString();
-    document.getElementById('t').innerHTML = numOfPeople.toString();
+function createWorld() {
+    world.destroy();
+    let numOfPeople = parseFloat(document.getElementById('numPeople').value);
+    return new World(numOfPeople);
 }
 class World {
     constructor(n) {

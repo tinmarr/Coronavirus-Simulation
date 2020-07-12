@@ -52,19 +52,12 @@ class Balls {
             this.healthState = newState;
             this.sprite.setTexture(newState);
             if (this.healthState === '1') {
-                ill++;
-                healthy--;
                 scene.time.delayedCall(21000, () => {
                     if (Math.random() <= 0.03) {
                         world.remove(this);
                         this.sprite.destroy();
-                        numOfPeople--;
-                        dead++;
-                        ill--;
                     } else {
                         this.changeState('2');
-                        ill--;
-                        recovered++;
                     }
                 });
             }
